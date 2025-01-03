@@ -6,7 +6,7 @@ export default function NavigationBar() {
   return (
     <nav className="bg-black">
       <ul className="flex">
-        {arr.map((val) => (
+        {arr.map((_, val) => (
           <li key={val} className="flex flex-1">
             <NavLink className="flex-1 p-2 text-center hover:bg-green-500">
               something

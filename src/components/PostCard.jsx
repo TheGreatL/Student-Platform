@@ -2,7 +2,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -11,17 +10,14 @@ export default function PostCard({ cardData }) {
   return (
     <Card className="w-[35rem] break-words">
       <CardHeader>
-        <CardTitle>{cardData.title}</CardTitle>
+        <CardTitle>{cardData.PostTitle}</CardTitle>
         <CardDescription>
-          <p> {cardData.description}</p>
+          <p> {cardData.PostAuthor}</p>
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <p>{cardData.content}</p>
+        <p>{cardData.PostContent}</p>
       </CardContent>
-      <CardFooter>
-        <p>{cardData.footer}</p>
-      </CardFooter>
     </Card>
   );
 }
