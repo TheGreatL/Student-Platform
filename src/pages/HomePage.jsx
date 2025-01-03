@@ -5,10 +5,10 @@ import useFetch from "@/hooks/useFetch";
 import AddPost from "@/components/AddPost";
 
 export default function HomePage() {
-  const { data, error, isFetching } = useFetch("PostTbl");
-  console.log([...data].reverse());
+  const { data: postData, error, isFetching } = useFetch("PostTbl");
+  console.log([...postData].reverse());
 
-  if (isFetching || error) {
+  if (isFetching) {
     return (
       <Page>
         <div className="flex flex-col items-center justify-center gap-2 p-2 px-6">
@@ -23,7 +23,7 @@ export default function HomePage() {
   return (
     <Page>
       <div className="flex flex-col items-center justify-center gap-2 p-2 px-6">
-        {[data].reverse().map((data) => (
+        {[...postData].reverse().map((data) => (
           <PostCard cardData={data} key={data.id} />
         ))}
       </div>
