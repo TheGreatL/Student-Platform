@@ -38,7 +38,7 @@ export default function AddModal({ isShowing, setIsShowing }) {
   });
   return (
     <Dialog open={isShowing} onOpenChange={setIsShowing}>
-      <DialogContent className="sm:max-w-[50rem]">
+      <DialogContent className="max-w-[18rem] lg:max-w-[50rem]">
         <DialogHeader>
           <DialogTitle>Add Post</DialogTitle>
           <DialogDescription>Add Post</DialogDescription>

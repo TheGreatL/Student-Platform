@@ -8,7 +8,7 @@ import {
 import PropTypes from "prop-types";
 export default function PostCard({ cardData }) {
   return (
-    <Card className="w-[35rem] break-words">
+    <Card className="w-[15rem] break-words lg:w-[35rem]">
       <CardHeader>
         <CardTitle>{cardData.PostTitle}</CardTitle>
         <CardDescription>
