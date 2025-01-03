@@ -23,7 +23,7 @@ export default function HomePage() {
   return (
     <Page>
       <div className="flex flex-col items-center justify-center gap-2 p-2 px-6">
-        {data.map((data) => (
+        {[data].reverse().map((data) => (
           <PostCard cardData={data} key={data.id} />
         ))}
       </div>
