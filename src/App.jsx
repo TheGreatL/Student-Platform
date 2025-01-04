@@ -4,6 +4,7 @@ import UserLayout from "./pages/UserLayout";
 import LandingPage from "./pages/LandingPage";
 
 import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/auth/LoginPage";
 
 export default function App() {
   return (
@@ -12,6 +13,7 @@ export default function App() {
       <Route path="/" element={<UserLayout />}>
         <Route path="home" element={<HomePage />} />
       </Route>
+      <Route path="/auth/login" element={<LoginPage />} />
       <Route path="*" element={<NotPage />} />
     </Routes>
   );

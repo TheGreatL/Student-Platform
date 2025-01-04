@@ -29,7 +29,7 @@ const useFetch = (table, select = "", defaultData = []) => {
         { event: "*", schema: "public", table: table },
         (payload) => {
           console.log("Change Received", payload);
-          fetchData();
+          setData((prevData) => [...prevData, payload.new]);
         },
       )
       .subscribe();

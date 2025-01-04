@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import NavigationBar from "./NavigationBar";
 import Search from "./Search";
 import { Button } from "./ui/button";
@@ -8,7 +9,7 @@ export default function Header() {
       <section className="flex gap-2 p-3">
         <Button>Logo</Button>
         <Search />
-        <Button>Avatar</Button>
+        <Link to="/auth/login">Avatar</Link>
       </section>
       <NavigationBar />
     </header>
