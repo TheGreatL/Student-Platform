@@ -1,3 +1,4 @@
+import Page from "@/components/Page";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -6,17 +7,14 @@ import supabase from "@/utils/supabase";
 import { useEffect, useState } from "react";
 
 import { useForm } from "react-hook-form";
-import Page from "../../components/Page";
-import { Link } from "react-router";
 
-export default function LoginPage() {
+export default function SignUpPage() {
   const [data, setData] = useState(null);
-
   const {
     register,
     formState: { errors },
-    handleSubmit,
     setError,
+    handleSubmit,
   } = useForm({
     defaultValues: {
       ["display name"]: "ken",
@@ -28,36 +26,49 @@ export default function LoginPage() {
   useEffect(() => {
     if (data === null) return;
 
-    const login = async () => {
-      const { data: fetchData, error } = await supabase.auth.signInWithOtp({
-        email: data.email,
-      });
+    const signUp = async () => {
+      const { data: fetchData, error } = await supabase.auth.signUp(data);
+      console.log(fetchData, error);
       if (error)
         setError("root", {
           message: error.message,
         });
-      console.log(error.message, fetchData);
     };
-    login();
+    signUp();
   }, [data, setError]);
-  const onFormLoginSubmit = async (data) => {
+
+  console.log(errors);
+  const onFormSignUp = async (data) => {
     setData(data);
     console.log(data);
   };
   return (
     <Page className="flex flex-col items-center justify-center bg-blue-200">
       <form
-        onSubmit={handleSubmit(onFormLoginSubmit)}
+        onSubmit={handleSubmit(onFormSignUp)}
         className="flex w-[15rem] flex-col gap-5 rounded-2xl bg-green-600 p-5 lg:w-[50rem]"
       >
+        {" "}
+        <h1 className="text-center text-2xl font-bold uppercase tracking-wider">
+          SignUp
+        </h1>
         {errors?.root && (
           <h1 className="text-xl font-semibold text-red-700">
             Error: {errors.root.message}
           </h1>
         )}
-        <h1 className="text-center text-2xl font-bold uppercase tracking-wider">
-          Login
-        </h1>
+        <div className="flex flex-col gap-5">
+          <Label htmlFor="post-title" className="w-[10rem]">
+            Name
+          </Label>
+          <Input
+            id="Name"
+            placeholder="jonhdoe@gmail.com"
+            className="bg-white"
+            {...register("Name", { required: "Name is required" })}
+          />
+          {errors.Name && <p>{errors.Name.message}</p>}
+        </div>
         <div className="flex flex-col gap-5">
           <Label htmlFor="post-title" className="w-[10rem]">
             Email
@@ -72,7 +83,7 @@ export default function LoginPage() {
         </div>
         <div className="flex flex-col gap-5">
           <Label htmlFor="post-content" className="flex-1 text-left">
-            Password
+            Name
           </Label>
           <Input
             id="password"
@@ -82,13 +93,7 @@ export default function LoginPage() {
           />
           {errors.password && <p>{errors.password.message}</p>}
         </div>
-        <Button type="submit">Login</Button>
-        <Link
-          to="../signup"
-          className="text-center font-semibold text-white underline"
-        >
-          Sign up
-        </Link>
+        <Button type="submit">Create Account</Button>
       </form>
     </Page>
   );

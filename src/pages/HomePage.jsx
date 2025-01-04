@@ -1,5 +1,5 @@
 import PostCard from "@/components/PostCard";
-import Page from "./Page";
+import Page from "../components/Page";
 import { Button } from "@/components/ui/button";
 import useFetch from "@/hooks/useFetch";
 import AddPost from "@/components/AddPost";
@@ -21,7 +21,7 @@ export default function HomePage() {
   }
 
   return (
-    <Page>
+    <Page className="bg-slate-50">
       <div className="flex flex-col items-center justify-center gap-2 p-2 px-6">
         {[...postData].reverse().map((data) => (
           <PostCard cardData={data} key={data.id} />

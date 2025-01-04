@@ -17,6 +17,17 @@ import { useForm } from "react-hook-form";
 export default function AddModal({ isShowing, setIsShowing }) {
   const { postData } = usePost("PostTbl");
 
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    reset,
+  } = useForm({
+    defaultValues: {
+      title: "",
+      content: "",
+    },
+  });
   const onPostData = (data) => {
     postData([
       {
@@ -26,17 +37,8 @@ export default function AddModal({ isShowing, setIsShowing }) {
       },
     ]);
     setIsShowing();
+    reset();
   };
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-  } = useForm({
-    defaultValues: {
-      title: "",
-      content: "",
-    },
-  });
   return (
     <Dialog open={isShowing} onOpenChange={setIsShowing}>
       <DialogContent className="max-w-[18rem] lg:max-w-[50rem]">
