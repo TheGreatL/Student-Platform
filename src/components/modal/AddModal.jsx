@@ -25,6 +25,7 @@ export default function AddModal({ isShowing, setIsShowing }) {
         PostAuthor: "ken",
       },
     ]);
+    setIsShowing();
   };
   const {
     register,

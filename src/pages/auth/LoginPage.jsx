@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import usePost from "@/hooks/usePost";
+
 import supabase from "@/utils/supabase";
 import { useEffect, useState } from "react";
 
@@ -15,7 +15,7 @@ export default function LoginPage() {
     handleSubmit,
   } = useForm({
     defaultValues: {
-      ["display name"]: "",
+      ["display name"]: "ken",
       email: "",
       password: "",
     },
