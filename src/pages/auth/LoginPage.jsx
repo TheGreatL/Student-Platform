@@ -1,92 +1,117 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import {Button} from '@/components/ui/button';
+import {Input} from '@/components/ui/input';
+import {Label} from '@/components/ui/label';
 
-import supabase from "@/utils/supabase";
-import { useEffect, useState } from "react";
+import supabase from '@/utils/supabase';
+import {useContext, useEffect, useState} from 'react';
 
-import { useForm } from "react-hook-form";
-import Page from "../../components/Page";
-import { Link } from "react-router";
+import {useForm} from 'react-hook-form';
+import Page from '../../components/Page';
+import {Link, useNavigate} from 'react-router';
+import {AuthContext} from '@/store/AuthProvider';
+import {useToast} from '@/hooks/use-toast';
 
 export default function LoginPage() {
+  const {toast} = useToast();
   const [data, setData] = useState(null);
+  const navigate = useNavigate();
+  const {authData, userLogin} = useContext(AuthContext);
 
   const {
     register,
-    formState: { errors },
+    formState: {errors},
     handleSubmit,
-    setError,
+    setError
   } = useForm({
     defaultValues: {
-      ["display name"]: "ken",
-      email: "",
-      password: "",
-    },
+      email: '',
+      password: ''
+    }
   });
 
   useEffect(() => {
     if (data === null) return;
 
     const login = async () => {
-      const { data: fetchData, error } = await supabase.auth.signInWithOtp({
-        email: data.email,
+      let {data: signInData, error} = await supabase.auth.signInWithPassword({
+        ...data
       });
-      if (error)
-        setError("root", {
-          message: error.message,
+      if (error) {
+        setError('root', {
+          message: error.message
         });
-      console.log(error.message, fetchData);
+        return;
+      }
+
+      // console.log(signInData);
+
+      const {data: userData, error: userDataError} = await supabase.from('Users').select('*').eq('email', data.email);
+      // console.log(userData);
+      if (userDataError) {
+        setError('root', {
+          message: error.message
+        });
+        return;
+      }
+      userLogin({...signInData, data: {...userData[0]}});
     };
     login();
-  }, [data, setError]);
+  }, [data, setError, userLogin]);
+  console.log(authData);
+
+  useEffect(() => {
+    if (!authData?.user) return;
+
+    toast({
+      title: 'Success Login',
+      variant: 'success',
+      position: 'top-center'
+    });
+    navigate('/', {replace: true});
+  }, [navigate, toast, authData]);
+
   const onFormLoginSubmit = async (data) => {
     setData(data);
-    console.log(data);
   };
   return (
-    <Page className="flex flex-col items-center justify-center bg-blue-200">
+    <Page className='flex flex-col items-center justify-center bg-blue-200'>
       <form
         onSubmit={handleSubmit(onFormLoginSubmit)}
-        className="flex w-[15rem] flex-col gap-5 rounded-2xl bg-green-600 p-5 lg:w-[50rem]"
-      >
-        {errors?.root && (
-          <h1 className="text-xl font-semibold text-red-700">
-            Error: {errors.root.message}
-          </h1>
-        )}
-        <h1 className="text-center text-2xl font-bold uppercase tracking-wider">
-          Login
-        </h1>
-        <div className="flex flex-col gap-5">
-          <Label htmlFor="post-title" className="w-[10rem]">
+        className='flex w-[15rem] flex-col gap-5 rounded-2xl bg-green-600 p-5 lg:w-[50rem]'>
+        {errors?.root && <h1 className='text-xl font-semibold text-red-700'>Error: {errors.root.message}</h1>}
+        <h1 className='text-center text-2xl font-bold uppercase tracking-wider'>Login</h1>
+        <div className='flex flex-col gap-5'>
+          <Label
+            htmlFor='email'
+            className='w-[10rem]'>
             Email
           </Label>
           <Input
-            id="email"
-            placeholder="jonhdoe@gmail.com"
-            className="bg-white"
-            {...register("email", { required: "email is required" })}
+            id='email'
+            placeholder='jonhdoe@gmail.com'
+            className='bg-white'
+            {...register('email', {required: 'email is required'})}
           />
           {errors.email && <p>{errors.email.message}</p>}
         </div>
-        <div className="flex flex-col gap-5">
-          <Label htmlFor="post-content" className="flex-1 text-left">
+        <div className='flex flex-col gap-5'>
+          <Label
+            htmlFor='password'
+            className='flex-1 text-left'>
             Password
           </Label>
           <Input
-            id="password"
-            placeholder="Password"
-            className="bg-white"
-            {...register("password", { required: "password is required" })}
+            id='password'
+            placeholder='Password'
+            className='bg-white'
+            {...register('password', {required: 'password is required'})}
           />
           {errors.password && <p>{errors.password.message}</p>}
         </div>
-        <Button type="submit">Login</Button>
+        <Button type='submit'>Login</Button>
         <Link
-          to="../signup"
-          className="text-center font-semibold text-white underline"
-        >
+          to='../signup'
+          className='text-center font-semibold text-white underline'>
           Sign up
         </Link>
       </form>

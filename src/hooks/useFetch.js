@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import supabase from "@/utils/supabase";
+import {useState, useEffect} from 'react';
+import supabase from '@/utils/supabase';
 
-const useFetch = (table, select = "", defaultData = []) => {
+const useFetch = (table, select = '', defaultData = []) => {
   const [data, setData] = useState(defaultData);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -10,10 +10,9 @@ const useFetch = (table, select = "", defaultData = []) => {
     const fetchData = async () => {
       try {
         setIsLoading(true);
-        const { data, error: fetchError } = await supabase
-          .from(table)
-          .select(select);
-        if (fetchError) setError(fetchError);
+        const {data, error: fetchError} = await supabase.from(table).select(select);
+        if (fetchError) throw new Error(fetchError);
+        setError(null);
         setData(data);
       } catch (error) {
         setError(error);
@@ -24,14 +23,10 @@ const useFetch = (table, select = "", defaultData = []) => {
     fetchData();
     const postChannel = supabase
       .channel(table)
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: table },
-        (payload) => {
-          console.log("Change Received", payload);
-          setData((prevData) => [...prevData, payload.new]);
-        },
-      )
+      .on('postgres_changes', {event: '*', schema: 'public', table: table}, (payload) => {
+        console.log('Change Received', payload);
+        setData((prevData) => [...prevData, payload.new]);
+      })
       .subscribe();
     return () => {
       supabase.removeChannel(postChannel);
@@ -43,7 +38,7 @@ const useFetch = (table, select = "", defaultData = []) => {
   return {
     data,
     isFetching: isLoading,
-    error,
+    error
   };
 };
 export default useFetch;

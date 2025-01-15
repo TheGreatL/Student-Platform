@@ -1,5 +1,5 @@
-import { useState } from "react";
-import supabase from "@/utils/supabase";
+import {useState} from 'react';
+import supabase from '@/utils/supabase';
 
 const usePost = (table, defaultData = []) => {
   const [data, setData] = useState(defaultData);
@@ -9,11 +9,10 @@ const usePost = (table, defaultData = []) => {
   const postingData = async (postData) => {
     try {
       setIsLoading(true);
-      const { data, error: insertError } = await supabase
-        .from(table)
-        .insert(postData);
-      if (insertError) setError(insertError);
+      const {data, error: insertError} = await supabase.from(table).insert(postData);
+      if (insertError) throw new Error(insertError);
       setData(data);
+      setError(null);
     } catch (error) {
       console.log(error);
       setError(error);
@@ -26,7 +25,7 @@ const usePost = (table, defaultData = []) => {
     data,
     isPosting: isLoading,
     error,
-    postData: postingData,
+    postData: postingData
   };
 };
 export default usePost;
