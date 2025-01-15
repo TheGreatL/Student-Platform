@@ -21,7 +21,7 @@ export default function AppRoutes() {
           path='/'
           element={<UserLayout />}>
           <Route
-            index
+            path='home'
             element={<HomePage />}
           />
         </Route>
