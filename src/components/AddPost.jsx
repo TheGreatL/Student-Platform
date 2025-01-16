@@ -13,7 +13,7 @@ export default function AddPost() {
   };
 
   const {authData} = useContext(AuthContext);
-  console.log(authData);
+
   return (
     <>
       <AddModal
@@ -21,7 +21,7 @@ export default function AddPost() {
         setIsShowing={() => setIsAddPostModalShowing((state) => !state)}
       />
       <Button
-        className='fixed bottom-12 right-12'
+        className=''
         onClick={() => {
           if (authData.user) {
             onAddPost();

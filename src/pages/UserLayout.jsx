@@ -1,13 +1,20 @@
-import Header from "@/components/Header";
+import Header from '@/components/Header';
+import LeftSidebar from '@/components/sidebar/LeftSidebar';
+import RightSidebar from '@/components/sidebar/RightSidebar';
 
-import { Outlet } from "react-router";
+import {Outlet} from 'react-router';
 
 export default function UserLayout() {
-  console.log(import.meta.env.VITE_APP_API_URL);
   return (
-    <main className="flex h-screen flex-col overflow-auto text-white">
+    <main className='flex h-screen flex-col text-white'>
       <Header />
-      <Outlet />
+      <section className='relative flex flex-1 overflow-auto text-black'>
+        <LeftSidebar />
+        <section className='flex flex-1'>
+          <Outlet />
+        </section>
+        <RightSidebar />
+      </section>
     </main>
   );
 }

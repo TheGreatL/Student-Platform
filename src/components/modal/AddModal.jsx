@@ -46,7 +46,7 @@ export default function AddModal({isShowing, setIsShowing}) {
     <Dialog
       open={isShowing}
       onOpenChange={setIsShowing}>
-      <DialogContent className='max-w-[18rem] lg:max-w-[50rem]'>
+      <DialogContent className='h-[25rem] max-w-[18rem] overflow-auto rounded-2xl lg:h-auto lg:max-w-[50rem]'>
         <DialogHeader>
           <DialogTitle>Add Post</DialogTitle>
           <DialogDescription>Add Post</DialogDescription>
@@ -77,7 +77,7 @@ export default function AddModal({isShowing, setIsShowing}) {
               className='resize-none'
               placeholder='Type your post here.'
               id='post-content'
-              rows={15}
+              rows={5}
               {...register('content', {required: 'content is required'})}
             />
             {errors.content && <p>{errors.content.message}</p>}

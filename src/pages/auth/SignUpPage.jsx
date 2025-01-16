@@ -2,16 +2,15 @@ import Page from '@/components/Page';
 import {Button} from '@/components/ui/button';
 import {Input} from '@/components/ui/input';
 import {Label} from '@/components/ui/label';
-import {useToast} from '@/hooks/use-toast';
 
 import supabase from '@/utils/supabase';
 import {useEffect, useState} from 'react';
 
 import {useForm} from 'react-hook-form';
 import {useNavigate} from 'react-router';
+import {toast} from 'sonner';
 
 export default function SignUpPage() {
-  const {toast} = useToast();
   const navigate = useNavigate();
   const [isSuccessSignup, setIsSuccessSignup] = useState(false);
   const [data, setData] = useState(null);
@@ -70,13 +69,24 @@ export default function SignUpPage() {
   useEffect(() => {
     if (!isSuccessSignup) return;
 
-    toast({
-      title: 'Sucess Sign up',
-      variant: 'success',
-      position: 'top-center'
+    toast('Sucess Signup, You can now Login', {
+      type: 'success',
+      position: 'top-center',
+      duration: 1000,
+      transition: 'scale',
+      className: 'h-[6rem] ',
+      iconTheme: 'colored',
+      style: {
+        display: 'flex',
+        color: '#fff',
+        fontSize: '1rem',
+        padding: '1rem',
+        borderRadius: '0.5rem',
+        boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)'
+      }
     });
     navigate('/auth/login', {replace: true});
-  }, [isSuccessSignup, toast, navigate]);
+  }, [isSuccessSignup, navigate]);
 
   console.log(errors);
   const onFormSignUp = async (data) => {

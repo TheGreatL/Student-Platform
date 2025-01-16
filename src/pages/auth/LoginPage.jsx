@@ -9,10 +9,8 @@ import {useForm} from 'react-hook-form';
 import Page from '../../components/Page';
 import {Link, useNavigate} from 'react-router';
 import {AuthContext} from '@/store/AuthProvider';
-import {useToast} from '@/hooks/use-toast';
-
+import {toast} from 'sonner';
 export default function LoginPage() {
-  const {toast} = useToast();
   const [data, setData] = useState(null);
   const navigate = useNavigate();
   const {authData, userLogin} = useContext(AuthContext);
@@ -43,10 +41,7 @@ export default function LoginPage() {
         return;
       }
 
-      // console.log(signInData);
-
       const {data: userData, error: userDataError} = await supabase.from('Users').select('*').eq('email', data.email);
-      // console.log(userData);
       if (userDataError) {
         setError('root', {
           message: error.message
@@ -62,13 +57,26 @@ export default function LoginPage() {
   useEffect(() => {
     if (!authData?.user) return;
 
-    toast({
-      title: 'Success Login',
-      variant: 'success',
-      position: 'top-center'
+    toast('Sucess Login', {
+      type: 'success',
+      position: 'top-center',
+      duration: 1000,
+      transition: 'scale',
+      className: 'h-[6rem] ',
+      iconTheme: 'colored',
+      style: {
+        display: 'flex',
+        backgroundColor: '#3CB043',
+        color: '#fff',
+        fontSize: '1rem',
+        padding: '1rem',
+        borderRadius: '0.5rem',
+        boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)'
+      }
     });
+
     navigate('/', {replace: true});
-  }, [navigate, toast, authData]);
+  }, [navigate, authData]);
 
   const onFormLoginSubmit = async (data) => {
     setData(data);

@@ -1,4 +1,3 @@
-import NavigationBar from './NavigationBar';
 import Search from './Search';
 import {Button} from './ui/button';
 import AvatarHeader from './AvatarHeader';
@@ -11,7 +10,7 @@ export default function Header() {
         <Search />
         <AvatarHeader />
       </section>
-      <NavigationBar />
+      {/* <NavigationBar /> */}
     </header>
   );
 }

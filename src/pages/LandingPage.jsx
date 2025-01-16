@@ -13,8 +13,8 @@ export default function LandingPage() {
     };
     fetchLocal();
   }, [navigate]);
-  const onClickProceed = () => {
-    localStorage.setItem('oldUser', true);
+  const onClickProceed = async () => {
+    await localStorage.setItem('oldUser', true);
     navigate('/home', {replace: true});
   };
   return (
