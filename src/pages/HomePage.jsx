@@ -1,6 +1,8 @@
 import PostCard from '@/components/PostCard';
 import Page from '../components/Page';
 import useFetch from '@/hooks/useFetch';
+import AddModal from '@/components/modal/AddModal';
+import AddPost from '@/components/AddPost';
 
 export default function HomePage() {
   const {data: postData, error, isFetching} = useFetch('Post');
@@ -29,6 +31,9 @@ export default function HomePage() {
             />
           ))
         }
+      </div>
+      <div className='fixed bottom-5 right-5 flex lg:hidden'>
+        <AddPost />
       </div>
     </Page>
   );
