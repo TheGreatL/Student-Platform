@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react';
-import supabase from '@/utils/supabase';
+import supabase from '@/service/supabase';
 
 const useFetch = (table, select = '', defaultData = []) => {
   const [data, setData] = useState(defaultData);
@@ -24,7 +24,6 @@ const useFetch = (table, select = '', defaultData = []) => {
     const postChannel = supabase
       .channel(table)
       .on('postgres_changes', {event: '*', schema: 'public', table: table}, (payload) => {
-        console.log('Change Received', payload);
         setData((prevData) => [...prevData, payload.new]);
       })
       .subscribe();

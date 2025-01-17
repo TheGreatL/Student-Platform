@@ -6,7 +6,7 @@ export default function LeftSidebar() {
   const arr = [
     {
       path: 'home',
-      text: 'Post'
+      text: 'Home'
     },
     {
       path: 'todo',
@@ -23,9 +23,9 @@ export default function LeftSidebar() {
   ];
 
   return (
-    <section className='sticky bottom-0 left-0 top-0 hidden w-[18rem] bg-white md:flex'>
-      <ScrollArea className='flex flex-1'>
-        <div className='mr-3 flex flex-1 flex-col gap-5 bg-white p-1'>
+    <section className='sticky bottom-0 left-0 top-0 hidden min-w-[17rem] max-w-[17rem] flex-col justify-center gap-5 bg-white py-5 md:flex'>
+      <ScrollArea className='flex max-h-[25rem]'>
+        <div className='mr-3 flex flex-col gap-5 bg-white p-1'>
           <ul className='flex flex-col gap-2'>
             {arr.map((link) => (
               <li
@@ -42,9 +42,9 @@ export default function LeftSidebar() {
               </li>
             ))}
           </ul>
-          <AddPost />
         </div>
       </ScrollArea>
+      <AddPost />
     </section>
   );
 }

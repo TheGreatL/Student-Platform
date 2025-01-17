@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import supabase from '@/utils/supabase';
+import supabase from '@/service/supabase';
 
 const usePost = (table, defaultData = []) => {
   const [data, setData] = useState(defaultData);
@@ -14,7 +14,6 @@ const usePost = (table, defaultData = []) => {
       setData(data);
       setError(null);
     } catch (error) {
-      console.log(error);
       setError(error);
     } finally {
       setIsLoading(false);

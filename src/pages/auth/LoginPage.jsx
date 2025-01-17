@@ -2,7 +2,7 @@ import {Button} from '@/components/ui/button';
 import {Input} from '@/components/ui/input';
 import {Label} from '@/components/ui/label';
 
-import supabase from '@/utils/supabase';
+import supabase from '@/service/supabase';
 import {useContext, useEffect, useState} from 'react';
 
 import {useForm} from 'react-hook-form';
@@ -52,7 +52,6 @@ export default function LoginPage() {
     };
     login();
   }, [data, setError, userLogin]);
-  console.log(authData);
 
   useEffect(() => {
     if (!authData?.user) return;
@@ -116,7 +115,7 @@ export default function LoginPage() {
           />
           {errors.password && <p>{errors.password.message}</p>}
         </div>
-        <Button type='submit'>Login</Button>
+        <Button>Login</Button>
         <Link
           to='../signup'
           className='text-center font-semibold text-white underline'>

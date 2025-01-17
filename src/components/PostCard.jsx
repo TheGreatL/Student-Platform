@@ -1,6 +1,8 @@
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
 import PropTypes from 'prop-types';
 import {motion} from 'framer-motion';
+import {formatDate} from '@/utils/Date';
+
 export default function PostCard({cardData}) {
   return (
     <motion.div
@@ -11,15 +13,17 @@ export default function PostCard({cardData}) {
     >
       <Card>
         <CardHeader>
-          <CardTitle>{cardData.PostTitle}</CardTitle>
-
+          <CardTitle>{cardData.PostAuthor}</CardTitle>
+          <CardTitle></CardTitle>
           <CardDescription>
-            <p>{cardData.created_at}</p>
-            <p>{cardData.PostAuthor}</p>
+            <p>{formatDate(cardData.created_at)}</p>
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <p>{cardData.PostContent}</p>
+          <h1 className='text-xl font-semibold text-black'>{cardData.PostTitle}</h1>
+          <div className='flex bg-gray-50 p-2'>
+            <p>{cardData.PostContent}</p>
+          </div>
         </CardContent>
       </Card>
     </motion.div>

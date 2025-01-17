@@ -5,7 +5,7 @@ import {Button} from './ui/button';
 import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar';
 
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from '@/components/ui/dropdown-menu';
-import supabase from '@/utils/supabase';
+import supabase from '@/service/supabase';
 export default function AvatarHeader() {
   const [isSignOut, setIsSignOut] = useState(false);
   const {authData} = useContext(AuthContext);
@@ -14,7 +14,6 @@ export default function AvatarHeader() {
     if (!isSignOut) return;
     const signOut = async () => {
       let {error} = await supabase.auth.signOut();
-      console.log(error);
       if (error) return;
 
       userSignOut();

@@ -3,7 +3,7 @@ import {Button} from '@/components/ui/button';
 import {Input} from '@/components/ui/input';
 import {Label} from '@/components/ui/label';
 
-import supabase from '@/utils/supabase';
+import supabase from '@/service/supabase';
 import {useEffect, useState} from 'react';
 
 import {useForm} from 'react-hook-form';
@@ -33,11 +33,10 @@ export default function SignUpPage() {
     if (data === null) return;
 
     const signUp = async () => {
-      let {data: signUpData, error} = await supabase.auth.signUp({
+      let {error} = await supabase.auth.signUp({
         email: data.email,
         password: data.password
       });
-      console.log(signUpData, error);
       if (error) {
         setError('root', {
           message: error.message
@@ -88,10 +87,8 @@ export default function SignUpPage() {
     navigate('/auth/login', {replace: true});
   }, [isSuccessSignup, navigate]);
 
-  console.log(errors);
   const onFormSignUp = async (data) => {
     setData(data);
-    console.log(data);
   };
   return (
     <Page className='flex flex-col items-center justify-center bg-blue-200'>
