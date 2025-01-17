@@ -1,7 +1,6 @@
 import PostCard from '@/components/PostCard';
 import Page from '../components/Page';
 import useFetch from '@/hooks/useFetch';
-import AddModal from '@/components/modal/AddModal';
 import AddPost from '@/components/AddPost';
 
 export default function HomePage() {
